@@ -15,5 +15,5 @@ data class Consult(
     @SerializedName("tagList")
     val tagList: List<Tag>?,
     @SerializedName("title")
-    val title: String?
+    val title: String?,
 )

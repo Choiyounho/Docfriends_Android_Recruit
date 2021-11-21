@@ -3,41 +3,54 @@ package com.soten.solution.ui.home.adapter.viewholder
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import com.soten.data.api.response.Company
-import com.soten.data.api.response.Consult
-import com.soten.extensions.load
-import com.soten.solution.databinding.ItemCompanyBinding
+import com.soten.domain.model.HomeItem
+import com.soten.solution.databinding.ItemCompanyListBinding
 import com.soten.solution.databinding.ItemConsultBinding
+import com.soten.solution.databinding.ItemExpertListBinding
+import com.soten.solution.ui.home.adapter.CompanyAdapter
+import com.soten.solution.ui.home.adapter.ExpertAdapter
 
 sealed class DocFriendsViewHolder(
-    binding: ViewDataBinding
+    binding: ViewDataBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
-
-    class CompanyViewHolder(
-        private val binding: ItemCompanyBinding
-    ) : DocFriendsViewHolder(binding) {
-
-        fun bind(company: Company) {
-            binding.company = company
-            binding.introImage.load(company.introPath ?: "")
-        }
-
-    }
 
     class ConsultViewHolder(
         private val binding: ItemConsultBinding,
     ) : DocFriendsViewHolder(binding) {
 
-        fun bind(consult: Consult) {
-            binding.consult = consult
-            binding.tagListChipGroup.removeAllViews()
-            consult.tagList?.forEach { tag ->
+        fun bind(homeItem: HomeItem.ItemConsult) {
+            binding.consult = homeItem.consult
+
+            homeItem.consult.tagList?.forEach { tag ->
                 binding.tagListChipGroup.addView(
                     Chip(binding.root.context).apply {
                         text = tag.name
                     }
                 )
             }
+            binding.executePendingBindings()
+        }
+    }
+
+    class CompanyListViewHolder(
+        private val binding: ItemCompanyListBinding,
+    ) : DocFriendsViewHolder(binding) {
+
+        fun bind(homeItem: HomeItem.ItemCompanyList) {
+            binding.companyListViewPager.adapter = CompanyAdapter(homeItem.companyList)
+            binding.executePendingBindings()
+        }
+
+    }
+
+    class ExpertListViewHolder(
+        private val binding: ItemExpertListBinding,
+    ) : DocFriendsViewHolder(binding) {
+
+        fun bind(homeItem: HomeItem.ItemExpertList) {
+            binding.expertListViewPager.adapter =
+                ExpertAdapter(homeItem.expertList)
+            binding.executePendingBindings()
         }
     }
 

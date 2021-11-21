@@ -4,18 +4,44 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import com.soten.data.api.response.Consult
 import com.soten.data.api.response.DocFriendsResponse
+import com.soten.domain.model.HomeItem
 import com.soten.solution.R
 import com.soten.solution.databinding.ItemCompanyBinding
+import com.soten.solution.databinding.ItemCompanyListBinding
 import com.soten.solution.databinding.ItemConsultBinding
+import com.soten.solution.databinding.ItemExpertListBinding
 import com.soten.solution.ui.home.adapter.viewholder.DocFriendsViewHolder
-import java.lang.IllegalArgumentException
 
-class DocFriendsAdapter : ListAdapter<DocFriendsResponse, DocFriendsViewHolder>(diffUtil) {
+class DocFriendsAdapter : ListAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) {
+
+    var items = listOf<HomeItem>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocFriendsViewHolder {
         return when (viewType) {
+            R.layout.item_company_list -> {
+                DocFriendsViewHolder.CompanyListViewHolder(
+                    ItemCompanyListBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+            R.layout.item_expert_list -> {
+                DocFriendsViewHolder.ExpertListViewHolder(
+                    ItemExpertListBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
             R.layout.item_consult -> {
                 DocFriendsViewHolder.ConsultViewHolder(
                     ItemConsultBinding.inflate(
@@ -25,35 +51,53 @@ class DocFriendsAdapter : ListAdapter<DocFriendsResponse, DocFriendsViewHolder>(
                     )
                 )
             }
-            R.layout.item_company -> {
-                DocFriendsViewHolder.CompanyViewHolder(
-                    ItemCompanyBinding.inflate(
-                        LayoutInflater.from(parent.context),
-                        parent,
-                        false
-                    )
-                )
-            }
+
             else -> throw IllegalArgumentException("유효 하지 않습니다.")
         }
     }
 
     override fun onBindViewHolder(holder: DocFriendsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        when (holder) {
+            is DocFriendsViewHolder.CompanyListViewHolder ->
+                holder.bind(items[position] as? HomeItem.ItemCompanyList ?: return)
+            is DocFriendsViewHolder.ExpertListViewHolder ->
+                holder.bind(items[position] as? HomeItem.ItemExpertList ?: return)
+            is DocFriendsViewHolder.ConsultViewHolder ->
+                holder.bind(items[position] as? HomeItem.ItemConsult ?: return)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (items[position]) {
+            is HomeItem.ItemConsult -> R.layout.item_consult
+            is HomeItem.ItemExpertList -> R.layout.item_expert_list
+            is HomeItem.ItemCompanyList -> R.layout.item_company_list
+        }
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<DocFriendsResponse>() {
+        val diffUtil = object : DiffUtil.ItemCallback<HomeItem>() {
             override fun areItemsTheSame(
-                oldItem: DocFriendsResponse,
-                newItem: DocFriendsResponse
+                oldItem: HomeItem,
+                newItem: HomeItem,
             ): Boolean {
-                return oldItem.consultList?.get(0)?.seq == newItem.consultList?.get(0)?.seq
+                return when {
+                    oldItem is HomeItem.ItemConsult && newItem is HomeItem.ItemConsult -> {
+                        oldItem.consult.seq == newItem.consult.seq
+                    }
+                    oldItem is HomeItem.ItemCompanyList && newItem is HomeItem.ItemCompanyList -> {
+                        oldItem.companyList == newItem.companyList
+                    }
+                    oldItem is HomeItem.ItemExpertList && newItem is HomeItem.ItemExpertList -> {
+                        oldItem.expertList == newItem.expertList
+                    }
+                    else -> false
+                }
             }
 
             override fun areContentsTheSame(
-                oldItem: DocFriendsResponse,
-                newItem: DocFriendsResponse
+                oldItem: HomeItem,
+                newItem: HomeItem,
             ): Boolean {
                 return oldItem == newItem
             }
