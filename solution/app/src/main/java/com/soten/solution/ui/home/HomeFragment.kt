@@ -27,18 +27,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        observeData()
-    }
-
-    private fun observeData() {
-        homeViewModel.docFriendsLiveData.observe(viewLifecycleOwner) {
-            Log.d("TestT", "진입")
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.home_menu, menu)
