@@ -12,7 +12,7 @@ private val factory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(tru
 fun ImageView.load(url: String?) {
     Glide.with(this)
         .load(url)
-        .error(R.drawable.close)
+        .error(R.drawable.error)
         .transition(DrawableTransitionOptions.withCrossFade(factory))
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(this)

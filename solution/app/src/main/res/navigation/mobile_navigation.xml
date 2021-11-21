@@ -12,12 +12,12 @@
 
     <fragment
         android:id="@+id/navigationDashboard"
-        android:name="com.soten.solution.ui.dashboard.DashboardFragment"
+        android:name="com.soten.solution.ui.expert.DashboardFragment"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigationCounseling"
-        android:name="com.soten.solution.ui.notifications.NotificationsFragment"
+        android:name="com.soten.solution.ui.counseling.NotificationsFragment"
         tools:layout="@layout/fragment_notifications" />
 
 </navigation>

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="consult"
+            type="com.soten.data.api.response.Consult" />
+
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,7 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="편도 결석이 자꾸 나와요~"
+        android:text="@{consult.title}"
+        tools:text="편도결석이 자꾸"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,3 +70,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/consultContext" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
