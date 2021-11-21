@@ -9,65 +9,75 @@
 
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_marginTop="16dp"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/consultTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@{consult.title}"
-        tools:text="편도결석이 자꾸"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="16dp">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/tagListChipGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/consultTitle"
-        app:layout_constraintStart_toStartOf="@id/consultTitle"
-        app:layout_constraintTop_toBottomOf="@id/consultTitle" />
+        <TextView
+            android:id="@+id/consultTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{consult.title}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="편도결석이 자꾸" />
 
-    <TextView
-        android:id="@+id/consultContext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="편도 결석이 \n ddd \n sadasdasdaxzc"
-        app:layout_constraintEnd_toEndOf="@id/consultTitle"
-        app:layout_constraintStart_toStartOf="@id/consultTitle"
-        app:layout_constraintTop_toBottomOf="@id/tagListChipGroup" />
+        <HorizontalScrollView
+            android:id="@+id/chipGroupContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="@id/consultTitle"
+            app:layout_constraintStart_toStartOf="@id/consultTitle"
+            app:layout_constraintTop_toBottomOf="@id/consultTitle">
 
-    <TextView
-        android:id="@+id/ConsultAnswerCnt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="답변 3"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="@id/consultTitle"
-        app:layout_constraintTop_toBottomOf="@id/consultContext" />
 
-    <TextView
-        android:id="@+id/consultRegDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="2020.10.18"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/consultContext" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagListChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleLine="true" />
+        </HorizontalScrollView>
+
+
+        <TextView
+            android:id="@+id/consultContext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{consult.context}"
+            app:layout_constraintEnd_toEndOf="@id/consultTitle"
+            app:layout_constraintStart_toStartOf="@id/consultTitle"
+            app:layout_constraintTop_toBottomOf="@id/chipGroupContainer" />
+
+        <TextView
+            android:id="@+id/ConsultAnswerCnt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{@string/answerFormat(consult.answerCnt)}"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="@id/consultTitle"
+            app:layout_constraintTop_toBottomOf="@id/consultContext" />
+
+        <TextView
+            android:id="@+id/consultRegDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{consult.regDateToKoreaTimeFormat(consult.regDate)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/consultContext" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

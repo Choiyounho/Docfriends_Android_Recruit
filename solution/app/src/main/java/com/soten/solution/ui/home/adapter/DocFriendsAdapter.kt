@@ -16,12 +16,6 @@ import com.soten.solution.ui.home.adapter.viewholder.DocFriendsViewHolder
 
 class DocFriendsAdapter : ListAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) {
 
-    var items = listOf<HomeItem>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocFriendsViewHolder {
         return when (viewType) {
             R.layout.item_company_list -> {
@@ -57,18 +51,20 @@ class DocFriendsAdapter : ListAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) 
     }
 
     override fun onBindViewHolder(holder: DocFriendsViewHolder, position: Int) {
+        val items = getItem(position)
+
         when (holder) {
             is DocFriendsViewHolder.CompanyListViewHolder ->
-                holder.bind(items[position] as? HomeItem.ItemCompanyList ?: return)
+                holder.bind(items as? HomeItem.ItemCompanyList ?: return)
             is DocFriendsViewHolder.ExpertListViewHolder ->
-                holder.bind(items[position] as? HomeItem.ItemExpertList ?: return)
+                holder.bind(items as? HomeItem.ItemExpertList ?: return)
             is DocFriendsViewHolder.ConsultViewHolder ->
-                holder.bind(items[position] as? HomeItem.ItemConsult ?: return)
+                holder.bind(items as? HomeItem.ItemConsult ?: return)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (items[position]) {
+        return when (getItem(position)) {
             is HomeItem.ItemConsult -> R.layout.item_consult
             is HomeItem.ItemExpertList -> R.layout.item_expert_list
             is HomeItem.ItemCompanyList -> R.layout.item_company_list

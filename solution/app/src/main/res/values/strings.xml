@@ -5,4 +5,6 @@
     <string name="expert">전문가</string>
     <string name="counseling">상담방</string>
     <string name="treatment">비대면진료</string>
+
+    <string name="answerFormat">답변 %s</string>
 </resources>
