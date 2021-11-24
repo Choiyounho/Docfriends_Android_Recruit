@@ -2,19 +2,16 @@ package com.soten.solution.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import com.soten.data.api.response.Consult
-import com.soten.data.api.response.DocFriendsResponse
 import com.soten.domain.model.HomeItem
 import com.soten.solution.R
-import com.soten.solution.databinding.ItemCompanyBinding
 import com.soten.solution.databinding.ItemCompanyListBinding
 import com.soten.solution.databinding.ItemConsultBinding
 import com.soten.solution.databinding.ItemExpertListBinding
 import com.soten.solution.ui.home.adapter.viewholder.DocFriendsViewHolder
 
-class DocFriendsAdapter : ListAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) {
+class PagingAdapter : PagingDataAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DocFriendsViewHolder {
         return when (viewType) {
@@ -68,6 +65,7 @@ class DocFriendsAdapter : ListAdapter<HomeItem, DocFriendsViewHolder>(diffUtil) 
             is HomeItem.ItemConsult -> R.layout.item_consult
             is HomeItem.ItemExpertList -> R.layout.item_expert_list
             is HomeItem.ItemCompanyList -> R.layout.item_company_list
+            else -> throw IllegalArgumentException("실패")
         }
     }
 

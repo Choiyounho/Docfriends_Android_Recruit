@@ -1,17 +1,18 @@
 package com.soten.solution.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.engine.Resource
 import com.soten.solution.R
 import com.soten.solution.databinding.FragmentHomeBinding
-import com.soten.solution.ui.home.adapter.DocFriendsAdapter
+import com.soten.solution.ui.home.adapter.PagingAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -21,8 +22,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val docFriendsAdapter by lazy {
-        DocFriendsAdapter()
+    private val pagingAdapter by lazy {
+        PagingAdapter()
     }
 
     override fun onCreateView(
@@ -44,14 +45,16 @@ class HomeFragment : Fragment() {
 
     private fun bindView() {
         binding.rvHome.apply {
-            adapter = docFriendsAdapter
+            adapter = pagingAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
     }
 
     private fun observeData() {
-        homeViewModel.homeItemListLiveData.observe(viewLifecycleOwner) {
-            docFriendsAdapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            homeViewModel.fetchPagingFlow().collectLatest {
+                pagingAdapter.submitData(it)
+            }
         }
     }
 

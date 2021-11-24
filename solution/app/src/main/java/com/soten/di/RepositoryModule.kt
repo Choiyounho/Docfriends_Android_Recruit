@@ -1,7 +1,7 @@
 package com.soten.di
 
-import com.soten.data.repository.DocFriendsRepository
-import com.soten.data.repository.DocFriendsRepositoryImpl
+import com.soten.data.repository.PagingRepository
+import com.soten.data.repository.PagingRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindsDocFriendsRepository(
-        docFriendsRepositoryImpl: DocFriendsRepositoryImpl
-    ): DocFriendsRepository
+    abstract fun bindsPagingRepository(
+        pagingRepositoryImpl: PagingRepositoryImpl,
+    ): PagingRepository
 
 }
