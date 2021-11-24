@@ -11,6 +11,12 @@ class CompanyViewHolder(
 
     fun bind(company: Company) {
         binding.company = company
+
+        val width = binding.root.resources.displayMetrics.widthPixels * 0.8
+        binding.root.layoutParams = binding.root.layoutParams.apply {
+            this.width = width.toInt()
+        }
+
         binding.introImage.load(company.introPath ?: "")
         binding.executePendingBindings()
     }

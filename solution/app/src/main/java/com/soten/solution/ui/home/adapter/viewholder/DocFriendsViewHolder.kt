@@ -1,6 +1,8 @@
 package com.soten.solution.ui.home.adapter.viewholder
 
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.soten.domain.model.HomeItem
@@ -37,7 +39,9 @@ sealed class DocFriendsViewHolder(
     ) : DocFriendsViewHolder(binding) {
 
         fun bind(homeItem: HomeItem.ItemCompanyList) {
-            binding.companyListViewPager.adapter = CompanyAdapter(homeItem.companyList)
+            binding.rvCompany.apply {
+                adapter = CompanyAdapter(homeItem.companyList)
+            }
             binding.executePendingBindings()
         }
 
@@ -48,8 +52,9 @@ sealed class DocFriendsViewHolder(
     ) : DocFriendsViewHolder(binding) {
 
         fun bind(homeItem: HomeItem.ItemExpertList) {
-            binding.expertListViewPager.adapter =
-                ExpertAdapter(homeItem.expertList)
+            binding.rvExpert.apply {
+                adapter = ExpertAdapter(homeItem.expertList)
+            }
             binding.executePendingBindings()
         }
     }
